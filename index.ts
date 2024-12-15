@@ -2,15 +2,14 @@ import fs from 'node:fs'
 
 import { Path, Logger, Config } from '#gc';
 
-Config.load();
-
 const apps = await (async () => {
     let ret = [];
-
     const files = fs
         .readdirSync(`${Path.Process}/plugins/ba-plugin/apps`)
         .filter(file => file.endsWith('.js'));
     
+    Config.load();
+
     files.forEach((file) => {
         ret.push(import(`./apps/${file}`));
     });
