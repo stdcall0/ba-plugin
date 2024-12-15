@@ -11,3 +11,6 @@ pnpm i
 ```
 
 #### Feature List
+- `/a <...>` or `/arona <...>`: search in arona db
+- `/a! <...>` or `/arona! <...>` same but disable caching
+- `#a`, `#arona` is OK as well
