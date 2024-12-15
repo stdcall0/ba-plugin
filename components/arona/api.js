@@ -50,7 +50,7 @@ export default class API {
         });
     }
     static async image(entry) {
-        const url = `${API.api_url}${entry.path}`;
+        const url = `${API.image_url}${entry.path}`;
         return axios.get(url, { responseType: 'arraybuffer' }).then((res) => {
             const hash = crypto.createHash('md5').update(res.data, 'binary').digest('hex');
             if (hash != entry.hash) {
