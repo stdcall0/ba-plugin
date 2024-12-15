@@ -1,22 +1,40 @@
 // @ts-ignore
 import plugin from '../../../../lib/plugins/plugin.js';
 
-type Task = {
+import type { User, Group, IBot } from "./types.js";
+interface Task {
     name: string;
     fnc?: any;
     cron?: any;
-};
+}
+interface Rule {
+    reg: string;
+    fnc: string;
+    log?: boolean;
+}
+interface ReplyParam {
+    recallMsg: number; // seconds, 0 - 120
+    at: boolean;
+}
+interface E {
+    msg: string;
+    sender: User;
+    group: Group;
+    bot: IBot;
+
+    reply: (msg: string | string[], quote?: boolean, data?: ReplyParam) => Promise<void>;
+}
 
 class PluginClass {
     name: string;
     dsc: string;
     event: string;
-    priority: number;
+    priority: number | string;
     task: Task;
-    rule: any;
-    e: any;
+    rule: Rule[];
+    e: E;
 
-    async reply(msg?: any, quote?: boolean, data?: any) {};
+    reply: (msg: string | string[], quote?: boolean, data?: ReplyParam) => Promise<void>;
     constructor(t: any) {};
 };
 
