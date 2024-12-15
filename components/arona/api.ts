@@ -53,7 +53,7 @@ export default abstract class API {
     }
 
     static async image(entry: Arona.Entry): Promise<Arona.ImageResult> {
-        const url = `${API.api_url}${entry.path}`;
+        const url = `${API.image_url}${entry.path}`;
 
         return axios.get(url, { responseType: 'arraybuffer' }).then((res) => {
             const hash = crypto.createHash('md5').update(res.data, 'binary').digest('hex');

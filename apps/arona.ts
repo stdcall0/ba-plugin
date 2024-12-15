@@ -3,9 +3,10 @@ import { Plugin } from '#gc';
 import { AronaAPI, AronaCache } from '#gc';
 import { Arona } from '#gc.model';
 
-export class AronaPlugin extends Plugin {
-    userState: Map<number, Arona.UserState>;
+let userState = new Map<number, Arona.UserState>();
+AronaCache.init();
 
+export class AronaPlugin extends Plugin {
     constructor() {
         super({
             name: 'Arona数据源攻略',
@@ -14,23 +15,15 @@ export class AronaPlugin extends Plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^(/arona|/a|/A|#arona|#a|#A) (.+)$',
+                    reg: '^(/arona|/a|/A|#arona|#a|#A) .+$',
                     fnc: 'arona'
                 },
                 {
-                    reg: '^(/arona|/a|/A|#arona|#a|#A)! (.+)$',
+                    reg: '^(/arona|/a|/A|#arona|#a|#A)! .+$',
                     fnc: 'arona_nocache'
-                },
-                {
-                    reg: '\d+',
-                    fnc: 'arona_options',
-                    log: false
                 }
             ]
         });
-    
-        this.userState = new Map<number, Arona.UserState>();
-        AronaCache.init();
     }
 
     removePrefix(msg: string): string {
@@ -54,7 +47,7 @@ export class AronaPlugin extends Plugin {
 
     async search(msg: string, sender: number, no_cache: boolean) {
         const keyword = this.removePrefix(msg);
-        this.userState.delete(sender);
+        userState.delete(sender);
 
         const res = await AronaAPI.search(keyword);
         if (res.status == Arona.Status.FUZZY_SEARCH) {
@@ -62,7 +55,7 @@ export class AronaPlugin extends Plugin {
             res.keywords.forEach((k, i) => {
                 w.push(`${i + 1}. ${k}`);
             });
-            this.userState.set(sender, {
+            userState.set(sender, {
                 keywords: res.keywords,
                 last_search_time: Date.now(),
                 no_cache: no_cache
@@ -84,12 +77,15 @@ export class AronaPlugin extends Plugin {
         await this.search(this.e.msg, this.e.sender.user_id, true);
     }
 
-    async arona_options() {
-        const sender = this.e.sender.user_id;
-        if (this.userState.has(sender)) {
-            const state = this.userState.get(sender);
+    async accept() {
+        const sender = this.e?.sender?.user_id;
+        const msg = this.e?.msg;
+        if (!sender || !msg) return;
+
+        if (userState.has(sender) && msg.match(/^\d+$/)) {
+            const state = userState.get(sender);
             if (Date.now() - state.last_search_time < 5*60*1000) {
-                const idx = parseInt(this.e.msg);
+                const idx = parseInt(msg);
                 if (idx > 0 && idx <= state.keywords.length) {
                     const res = await AronaAPI.search(state.keywords[idx - 1]);
                     if (res.status == Arona.Status.FOUND) {
@@ -97,10 +93,10 @@ export class AronaPlugin extends Plugin {
                     } else {
                         await this.e.reply(`查询出错: ${res.error_msg}`);
                     }
-                    this.userState.delete(sender);
+                    userState.delete(sender);
                 }
             } else {
-                this.userState.delete(sender);
+                userState.delete(sender);
             }
         }
     }
