@@ -4,10 +4,10 @@ import { Logger, Config } from '#gc';
 import { Arona } from '#gc.model';
 export default class API {
     static get api_url() {
-        return Config.get('arona').get('search_api');
+        return Config.get('arona').get('endpoints.search_api');
     }
     static get image_url() {
-        return Config.get('arona').get('image_cdn');
+        return Config.get('arona').get('endpoints.image_cdn');
     }
     static async search(keyword) {
         return axios.get(API.api_url, { params: {
