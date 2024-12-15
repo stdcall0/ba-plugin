@@ -33,12 +33,12 @@ export class AronaPlugin extends Plugin {
     async image(entry: Arona.Entry, no_cache: boolean) {
         const hash = entry.hash;
         if (AronaCache.has(hash) && !no_cache) {
-            await this.e.reply(AronaCache.get(hash));
+            await this.e.reply(segment.image(AronaCache.get(hash)));
         } else {
             const img = await AronaAPI.image(entry);
             if (img.image != null) {
                 AronaCache.set(hash, img.image);
-                await this.e.reply(img.image);
+                await this.e.reply(segment.image(img.image));
             } else {
                 await this.e.reply(`下载图片出错: ${img.error_msg}`);
             }
