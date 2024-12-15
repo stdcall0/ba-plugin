@@ -18,11 +18,6 @@ export class AronaPlugin extends Plugin {
                 {
                     reg: '^(/arona|/a|/A|#arona|#a|#A)! .+$',
                     fnc: 'arona_nocache'
-                },
-                {
-                    reg: '^\d+$',
-                    fnc: 'arona_options',
-                    log: false
                 }
             ]
         });
@@ -75,12 +70,16 @@ export class AronaPlugin extends Plugin {
     async arona_nocache() {
         await this.search(this.e.msg, this.e.sender.user_id, true);
     }
-    async arona_options() {
-        const sender = this.e.sender.user_id;
-        if (userState.has(sender)) {
+    async accept() {
+        var _a, _b, _c;
+        const sender = (_b = (_a = this.e) === null || _a === void 0 ? void 0 : _a.sender) === null || _b === void 0 ? void 0 : _b.user_id;
+        const msg = (_c = this.e) === null || _c === void 0 ? void 0 : _c.msg;
+        if (!sender || !msg)
+            return;
+        if (userState.has(sender) && msg.match(/^\d+$/)) {
             const state = userState.get(sender);
             if (Date.now() - state.last_search_time < 5 * 60 * 1000) {
-                const idx = parseInt(this.e.msg);
+                const idx = parseInt(msg);
                 if (idx > 0 && idx <= state.keywords.length) {
                     const res = await AronaAPI.search(state.keywords[idx - 1]);
                     if (res.status == Arona.Status.FOUND) {
