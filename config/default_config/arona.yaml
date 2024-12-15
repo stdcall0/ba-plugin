@@ -1,0 +1,14 @@
+cache:
+  # 缓存图片过期时间，单位秒
+  expire: 86400
+  # 缓存图片路径 (相对 Yunzai 根目录)
+  # 不建议修改，除非你知道自己在做什么
+  path: "./data/ba_plugin/cache"
+  # 是否在启动 Yunzai 时清空缓存
+  auto_clear: true
+
+endpoints:
+  # Arona数据源 API
+  search_api: "https://arona.diyigemt.com/api/v1/image"
+  # Arona数据源 CDN
+  image_cdn: "https://arona.cdn.diyigemt.com/image"
