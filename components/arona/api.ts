@@ -6,11 +6,11 @@ import { Arona } from '#gc.model';
 
 export default abstract class API {
     static get api_url() {
-        return Config.get('arona').get('search_api') as string;
+        return Config.get('arona').get('endpoints.search_api') as string;
     }
 
     static get image_url() {
-        return Config.get('arona').get('image_cdn') as string;
+        return Config.get('arona').get('endpoints.image_cdn') as string;
     }
 
     static async search(keyword: string): Promise<Arona.SearchResult> {
