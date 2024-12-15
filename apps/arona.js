@@ -18,7 +18,7 @@ export class AronaPlugin extends Plugin {
                     fnc: 'arona_nocache'
                 },
                 {
-                    reg: '\d+',
+                    reg: '',
                     fnc: 'arona_options',
                     log: false
                 }
@@ -77,10 +77,11 @@ export class AronaPlugin extends Plugin {
     }
     async arona_options() {
         const sender = this.e.sender.user_id;
-        if (this.userState.has(sender)) {
+        const msg = this.e.msg;
+        if (this.userState.has(sender) && msg.match(/^\d+$/)) {
             const state = this.userState.get(sender);
             if (Date.now() - state.last_search_time < 5 * 60 * 1000) {
-                const idx = parseInt(this.e.msg);
+                const idx = parseInt(msg);
                 if (idx > 0 && idx <= state.keywords.length) {
                     const res = await AronaAPI.search(state.keywords[idx - 1]);
                     if (res.status == Arona.Status.FOUND) {
