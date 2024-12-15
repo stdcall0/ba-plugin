@@ -19,12 +19,15 @@ export default class Cache {
         if (auto_clear) {
             try {
                 fs.rmSync(Cache.cache_path, { recursive: true });
-                fs.mkdirSync(Cache.cache_path, { recursive: true });
             }
             catch (e) { }
-            if (!fs.existsSync(Cache.cache_path)) {
-                Logger.error("[ba-plugin][arona] Cannot create cache folder: " + Cache.cache_path);
-            }
+        }
+        try {
+            fs.mkdirSync(Cache.cache_path, { recursive: true });
+        }
+        catch (e) { }
+        if (!fs.existsSync(Cache.cache_path)) {
+            Logger.error("[ba-plugin][arona] Cannot create cache folder: " + Cache.cache_path);
         }
     }
     static has(hash) {
