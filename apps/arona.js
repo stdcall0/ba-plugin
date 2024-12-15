@@ -28,7 +28,7 @@ export class AronaPlugin extends Plugin {
     async image(entry, no_cache) {
         const hash = entry.hash;
         if (AronaCache.has(hash) && !no_cache) {
-            await this.e.reply(AronaCache.get(hash));
+            await this.e.reply(segment.image(AronaCache.get(hash)));
         }
         else {
             const img = await AronaAPI.image(entry);
