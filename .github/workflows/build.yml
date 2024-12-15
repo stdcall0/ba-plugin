@@ -2,7 +2,7 @@ name: Build TypeScript
 on: 
     push: 
         branches:
-            - master
+            - main
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -15,3 +15,4 @@ jobs:
                 pushToBranch: true
                 branch: 'dist'
                 githubToken: ${{ secrets.GITHUB_TOKEN }}
+
