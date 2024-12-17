@@ -95,6 +95,9 @@ export class AronaPlugin extends Plugin {
                     }
                     userState.delete(sender);
                 }
+                else if (idx == 0) {
+                    userState.delete(sender);
+                }
             } else {
                 userState.delete(sender);
             }

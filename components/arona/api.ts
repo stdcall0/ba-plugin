@@ -1,8 +1,11 @@
 import axios from 'axios';
 import crypto from 'crypto';
+import _ from 'lodash';
 
 import { Logger, Config } from '#gc';
 import { Arona } from '#gc.model';
+
+import { AronaAlias } from '#gc.res';
 
 export default abstract class API {
     static get api_url() {
@@ -14,6 +17,14 @@ export default abstract class API {
     }
 
     static async search(keyword: string): Promise<Arona.SearchResult> {
+        if (_.has(AronaAlias, keyword))
+            return {
+                status: Arona.Status.FUZZY_SEARCH,
+                keywords: _.get(AronaAlias, keyword),
+                entry: null,
+                error_msg: null
+            };
+        
         return axios.get<Arona.Response>(API.api_url, { params: {
             'name': keyword
         }}).then((res) => {
