@@ -13,8 +13,8 @@ interface Rule {
     log?: boolean;
 }
 interface ReplyParam {
-    recallMsg: number; // seconds, 0 - 120
-    at: boolean;
+    recallMsg?: number; // seconds, 0 - 120
+    at?: boolean;
 }
 interface E {
     msg: string;

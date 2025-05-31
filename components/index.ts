@@ -9,6 +9,8 @@ import Config from './config.js';
 import AronaCache from './arona/cache.js';
 import AronaAPI from './arona/api.js';
 
+import TodaysFortunePicker from './todays_fortune/picker.js';
+
 export {
     Common,
     Logger,
@@ -20,4 +22,6 @@ export {
 
     AronaCache,
     AronaAPI,
+
+    TodaysFortunePicker
 };
