@@ -20,3 +20,8 @@ bin-release/
 node_modules/
 
 package-lock.json
+
+# Config files (excluding default)
+config/*
+!config/config_default/
+!config/config_default/**
