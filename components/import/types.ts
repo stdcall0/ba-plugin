@@ -23,6 +23,7 @@ export interface IBot {
 }
 export interface User {
     user_id: number;
+    card?: string; // Only for GroupMember
     sendMsg: (msg: Message) => void;
     recallMsg: (message_id: number) => void;
     makeForwardMsg: (msg: Message) => Message;
