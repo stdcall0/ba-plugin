@@ -19,8 +19,6 @@ export class AronaPlugin extends Plugin {
     }
 
     async todays_fortune() {
-        if (!this.e.sender.card) return; // 非群聊
-
         // 实现效果，每个用户每天运势都一样
         // 我们通过将用户ID+日期拼接作为随机种子来实现
         const userId = this.e.sender.user_id;
@@ -52,6 +50,6 @@ ${fortune.unsignText}
 
 仅供娱乐|相信科学|请勿迷信`;
 
-        await this.e.reply([segment.at(userId, this.e.sender.card), response], true);
+        await this.e.reply(response, true);
     }
 };
