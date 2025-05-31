@@ -1,2 +1,3 @@
 import AronaAlias from './arona_alias.js';
-export { AronaAlias };
+import TodaysFortuneData from './todays_fortune.js';
+export { AronaAlias, TodaysFortuneData };
