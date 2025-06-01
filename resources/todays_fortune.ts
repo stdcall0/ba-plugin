@@ -1,6 +1,6 @@
 import { TodaysFortune } from '#gc.model';
 
-const data: TodaysFortune[] = [
+export default [
     {
         "fortuneSummary": "大吉+官运",
         "luckyStar": "★★★★★★☆",
@@ -385,6 +385,4 @@ const data: TodaysFortune[] = [
         "signText": "天时地利，再得人格，讲信修睦，即可成功",
         "unsignText": "资性英敏有奇能，怪癖不和害前程，修身涵养与仁和，奏功获得大鸿图。需要注重个人私生活，可免因桃色韵事贻误前程。"
     },
-];
-
-export default data;
+] as const satisfies TodaysFortune[];
