@@ -19,11 +19,15 @@ export class AronaPlugin extends Plugin {
         // 实现效果，每个用户每天运势都一样
         // 我们通过将用户ID+日期拼接作为随机种子来实现
         const userId = this.e.sender.user_id;
-        const date = new Date().toISOString().split('T')[0]; // 获取当前日期
+        // 使用本地时区
+        const date = new Date().toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).replace(/\//g, '-'); // 格式化为 YYYY-MM-DD
         const seed = `${userId}-${date}`;
         const fortune = TodaysFortunePicker.pick(seed);
         /* Example response
-            @昳澄
             您的今日运势为：
             凶带吉
             ★★★☆☆☆☆
