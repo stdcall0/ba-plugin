@@ -1,4 +1,4 @@
-const data = [
+export default [
     {
         "fortuneSummary": "大吉+官运",
         "luckyStar": "★★★★★★☆",
@@ -384,4 +384,3 @@ const data = [
         "unsignText": "资性英敏有奇能，怪癖不和害前程，修身涵养与仁和，奏功获得大鸿图。需要注重个人私生活，可免因桃色韵事贻误前程。"
     },
 ];
-export default data;

@@ -9,7 +9,8 @@
   "type": "module",
   "devDependencies": {
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.11.2"
+    "@types/node": "^20.11.2",
+    "@types/seedrandom": "^3.0.8"
   },
   "imports": {
     "#gc": "./components/index.js",
